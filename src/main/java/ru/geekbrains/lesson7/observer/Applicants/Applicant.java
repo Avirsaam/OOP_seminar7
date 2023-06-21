@@ -19,6 +19,11 @@ public abstract class Applicant implements Observer {
 
     protected double minSalary;
 
+    @Override
+    public boolean appliedFor(EnumPositionType position) {
+        return interestedPositions.contains(position);
+    }
+
     protected Applicant(EnumApplicantGrade grade, String name, double minSalary, List<EnumPositionType> interestedPositions){
         this.grade = grade;
         this.name = name;
@@ -34,8 +39,8 @@ public abstract class Applicant implements Observer {
      */
     @Override
     public boolean receiveAdvertisement(JobAdvertisement advertisement) {
-        System.out.printf("\n%s %s:\nИнтересуют вакансии %s,\nc мин зарплатой (%.2f)\n",grade, name, interestedPositions, minSalary);
-        if (interestedPositions.contains(advertisement.getPosition()) && minSalary <= advertisement.getSalary()){
+        System.out.printf("\n%s %s:\nИнтересуют вакансии %s,\nжелаемая зарплата: %.2f\n",grade, name, interestedPositions, minSalary);
+        if (minSalary <= advertisement.getSalary()){
             System.out.printf("\t>>>Мне нужна эта работа! (%s - %.2f)\n",
                     advertisement.getCompany().getCompanyName(), advertisement.getSalary());
             return true;

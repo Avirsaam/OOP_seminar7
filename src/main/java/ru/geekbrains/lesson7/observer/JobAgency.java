@@ -25,7 +25,8 @@ public class JobAgency implements Publisher {
     public void sendAdvertisement(JobAdvertisement advertisement) {
         System.out.println("\n----[Новая " + advertisement + "]----");
         for (Observer observer: observers) {
-            observer.receiveAdvertisement(advertisement);
+            if (observer.appliedFor(advertisement.getPosition()))
+                observer.receiveAdvertisement(advertisement);
         }
     }
 }
